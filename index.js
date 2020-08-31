@@ -5,11 +5,13 @@ const fetchData = async (searchTerm) => {
       s: searchTerm,
     },
   });
+  return response.data.Search;
+};
 
-  console.log(response.data);
+const onInput = async (event) => {
+  const movies = await fetchData(event.target.value);
+  console.log(movies);
 };
 
 const input = document.querySelector("input");
-input.addEventListener("input", (event) => {
-  fetchData(event.target.value);
-});
+input.addEventListener("input", debounce(onInput, 500));
