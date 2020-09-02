@@ -13,6 +13,19 @@ createAutoComplete({
   inputValue(movie) {
     return movie.Title;
   },
+  async fetchData(searchTerm) {
+    const response = await axios.get("http://www.omdbapi.com/", {
+      params: {
+        apikey: "a72e49f4",
+        s: searchTerm,
+      },
+    });
+
+    if (response.data.Error) {
+      return [];
+    }
+    return response.data.Search;
+  },
 });
 
 const onMovieSelect = async (movie) => {
